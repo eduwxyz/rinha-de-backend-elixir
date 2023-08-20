@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+
+  postgres:
+    image: postgres:13
+    hostname: localhost
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=rinha
+      - POSTGRES_PASSWORD=rinha
+      - POSTGRES_DB=rinha
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "rinha"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
