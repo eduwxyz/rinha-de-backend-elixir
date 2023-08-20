@@ -5,4 +5,16 @@ defmodule RinhaBackendWeb.PessoasJSON do
       id: pessoa.uuid
     }
   end
+
+
+
+  def show(%{pessoa: pessoa}) do
+    %{
+      id: pessoa.uuid,
+      nome: pessoa.nome,
+      apelido: pessoa.apelido,
+      stack: pessoa.stack,
+    }
+  end
+
 end

@@ -15,6 +15,15 @@ defmodule RinhaBackendWeb.PessoasController do
     end
   end
 
+
+  def show(conn, %{"uuid" => uuid}) do
+    with {:ok, %Pessoa{} = pessoa} <- Pessoas.get(uuid) do
+      conn
+      |> put_status(:ok)
+      |> render(:show, pessoa: pessoa)
+    end
+  end
+
   # def handle_response({:ok, pessoa}, conn) do
   #   conn
   #   # 201

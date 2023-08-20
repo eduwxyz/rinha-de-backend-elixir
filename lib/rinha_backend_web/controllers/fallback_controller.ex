@@ -2,6 +2,15 @@ defmodule RinhaBackendWeb.FallbackController do
   use RinhaBackendWeb, :controller
 
 
+
+  def call(conn, {:error, :not_found}) do
+    conn
+    |> put_status(:not_found)
+    |> put_view(json: RinhaBackendWeb.ErrorJSON)
+    |> render(:error, status: :not_found)
+  end
+
+
   def call(conn, {:error, changeset}) do
     status =
       if is_invalid_type(changeset, :nome) or is_invalid_type(changeset, :apelido) do

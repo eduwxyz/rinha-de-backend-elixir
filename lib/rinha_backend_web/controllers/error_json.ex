@@ -9,6 +9,15 @@ defmodule RinhaBackendWeb.ErrorJSON do
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.json" becomes
 
+  def error(%{status: :not_found}) do
+    %{
+      status: :not_found,
+      message: "Not Found"
+    }
+  end
+
+
+
   def error(%{changeset: changeset}) do
     %{
       errors:
