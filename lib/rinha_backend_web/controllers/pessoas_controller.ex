@@ -15,6 +15,14 @@ defmodule RinhaBackendWeb.PessoasController do
     end
   end
 
+  def contagem_pessoas(conn, _params) do
+    with {:ok, count} <- Pessoas.count() do
+      conn
+      |> put_status(:ok)
+      |> render(:contagem_pessoas, count: count)
+    end
+  end
+
 
   def show(conn, %{"uuid" => uuid}) do
     with {:ok, %Pessoa{} = pessoa} <- Pessoas.get(uuid) do

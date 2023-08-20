@@ -6,6 +6,12 @@ defmodule RinhaBackendWeb.PessoasJSON do
     }
   end
 
+  def contagem_pessoas(%{count: count}) do
+    %{
+      message: "Contagem de pessoas",
+      count: count
+    }
+  end
 
 
   def show(%{pessoa: pessoa}) do
