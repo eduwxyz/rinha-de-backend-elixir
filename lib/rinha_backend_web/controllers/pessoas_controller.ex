@@ -16,9 +16,11 @@ defmodule RinhaBackendWeb.PessoasController do
   end
 
   def search(conn, %{"t" => _} = params) do
-    conn
-    |> put_status(:ok)
-    |> json([])
+    with {:ok, pessoas} <- Pessoas.search(params) do
+      conn
+      |> put_status(:ok)
+      |> render(:search, pessoas: pessoas)
+    end
   end
 
   def contagem_pessoas(conn, _params) do
@@ -28,7 +30,6 @@ defmodule RinhaBackendWeb.PessoasController do
       |> render(:contagem_pessoas, count: count)
     end
   end
-
 
   def show(conn, %{"uuid" => uuid}) do
     with {:ok, %Pessoa{} = pessoa} <- Pessoas.get(uuid) do

@@ -16,8 +16,6 @@ defmodule RinhaBackendWeb.ErrorJSON do
     }
   end
 
-
-
   def error(%{changeset: changeset}) do
     %{
       errors:

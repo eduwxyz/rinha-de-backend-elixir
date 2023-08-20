@@ -13,19 +13,18 @@ defmodule RinhaBackendWeb.PessoasJSON do
     }
   end
 
-  def search() do
-
-    []
-end
-
+  def search(%{pessoas: pessoas}) do
+    %{
+      message: "Pessoas encontradas",
+    }
+  end
 
   def show(%{pessoa: pessoa}) do
     %{
       id: pessoa.uuid,
       nome: pessoa.nome,
       apelido: pessoa.apelido,
-      stack: pessoa.stack,
+      stack: pessoa.stack
     }
   end
-
 end

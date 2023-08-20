@@ -9,7 +9,6 @@ defmodule RinhaBackend.Pessoas.Count do
     }
   end
 
-
   # defp handle_response({:ok, pessoa}), do: pessoa
   # defp handle_response({:error, changeset}), do: changeset
 end
