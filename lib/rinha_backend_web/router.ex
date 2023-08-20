@@ -5,8 +5,11 @@ defmodule RinhaBackendWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", RinhaBackendWeb do
+  scope "/", RinhaBackendWeb do
     pipe_through :api
+
+    post "/pessoas", PessoasController, :create
+    get "/", WelcomeController, :index
   end
 
   # Enable LiveDashboard in development
