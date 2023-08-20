@@ -8,7 +8,7 @@ config :rinha_backend, RinhaBackend.Repo,
   database: "rinha_backend_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 40
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -21,8 +21,8 @@ config :rinha_backend, RinhaBackendWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 9999],
   check_origin: false,
-  code_reloader: true,
-  debug_errors: true,
+  code_reloader: false,
+  debug_errors: false,
   secret_key_base: "AD0qlBrhqjgI/4UsQImJkmwCZ/+km3761QW0FGc5PEbUkCePGm2YOMbNnSMZl0Y3",
   watchers: []
 
