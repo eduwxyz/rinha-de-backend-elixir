@@ -9,7 +9,7 @@ defmodule RinhaBackendWeb.Router do
     pipe_through :api
 
     post "/pessoas", PessoasController, :create
-    get "/pessoas/contagem-pessoas", PessoasController, :contagem_pessoas
+    get "/contagem-pessoas", PessoasController, :contagem_pessoas
     get "/pessoas/:uuid", PessoasController, :show
     get "/pessoas", PessoasController, :search
     get "/", WelcomeController, :index
