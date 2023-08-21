@@ -8,9 +8,7 @@ defmodule RinhaBackend.Pessoas.Search do
     query =
       from p0 in Pessoa,
         where:
-          ilike(p0.nome, ^"%#{query_param}%") or
-            ilike(p0.apelido, ^"%#{query_param}%") or
-            fragment("? = ANY(p0.stack)", ^query_param),
+            ilike(p0.pesquisa, ^"%#{query_param}%"),
         limit: 50
 
 
