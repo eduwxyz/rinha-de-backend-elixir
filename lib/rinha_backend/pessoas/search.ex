@@ -7,9 +7,10 @@ defmodule RinhaBackend.Pessoas.Search do
   def call(query_param) do
     query =
       from p0 in Pessoa,
-        where: ilike(p0.nome, ^"%#{query_param}%") or
-               ilike(p0.apelido, ^"%#{query_param}%") or
-               fragment("? = ANY(p0.stack)", ^query_param)
+        where:
+          ilike(p0.nome, ^"%#{query_param}%") or
+            ilike(p0.apelido, ^"%#{query_param}%") or
+            fragment("? = ANY(p0.stack)", ^query_param)
 
     {:ok, Repo.all(query)}
   end

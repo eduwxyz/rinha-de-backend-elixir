@@ -10,5 +10,4 @@ defmodule RinhaBackend.Pessoas do
   defdelegate count(), to: Count, as: :call
 
   defdelegate search(query_param), to: Search, as: :call
-
 end

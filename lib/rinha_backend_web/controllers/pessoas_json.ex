@@ -13,7 +13,6 @@ defmodule RinhaBackendWeb.PessoasJSON do
     }
   end
 
-
   def error(%{message: message}) do
     %{
       message: message
@@ -21,9 +20,9 @@ defmodule RinhaBackendWeb.PessoasJSON do
   end
 
   def search(%{pessoas: pessoas}) do
-   %{
-    data: render_pessoas(pessoas)
-   }
+    %{
+      data: render_pessoas(pessoas)
+    }
   end
 
   defp render_pessoas(pessoas) do
@@ -39,7 +38,6 @@ defmodule RinhaBackendWeb.PessoasJSON do
       stack: pessoa.stack
     }
   end
-
 
   def show(%{pessoa: pessoa}) do
     %{

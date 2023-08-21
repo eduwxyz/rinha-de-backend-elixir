@@ -24,7 +24,6 @@ defmodule RinhaBackendWeb.PessoasController do
     end
   end
 
-
   def contagem_pessoas(conn, _params) do
     with {:ok, count} <- Pessoas.count() do
       conn
