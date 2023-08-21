@@ -13,11 +13,33 @@ defmodule RinhaBackendWeb.PessoasJSON do
     }
   end
 
-  def search(%{pessoas: pessoas}) do
+
+  def error(%{message: message}) do
     %{
-      message: "Pessoas encontradas",
+      message: message
     }
   end
+
+  def search(%{pessoas: pessoas}) do
+   %{
+    data: render_pessoas(pessoas)
+   }
+  end
+
+  defp render_pessoas(pessoas) do
+    Enum.map(pessoas, &render_pessoa/1)
+  end
+
+  defp render_pessoa(pessoa) do
+    %{
+      uuid: pessoa.uuid,
+      nome: pessoa.nome,
+      apelido: pessoa.apelido,
+      nascimento: pessoa.nascimento,
+      stack: pessoa.stack
+    }
+  end
+
 
   def show(%{pessoa: pessoa}) do
     %{

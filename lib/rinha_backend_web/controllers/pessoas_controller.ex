@@ -15,13 +15,15 @@ defmodule RinhaBackendWeb.PessoasController do
     end
   end
 
-  def search(conn, %{"t" => _} = params) do
-    with {:ok, pessoas} <- Pessoas.search(params) do
-      conn
-      |> put_status(:ok)
-      |> render(:search, pessoas: pessoas)
+  def search(conn, %{"t" => query_param}) do
+    case Pessoas.search(query_param) do
+      {:ok, pessoas} when is_list(pessoas) ->
+        conn
+        |> put_status(:ok)
+        |> render(:search, pessoas: pessoas)
     end
   end
+
 
   def contagem_pessoas(conn, _params) do
     with {:ok, count} <- Pessoas.count() do

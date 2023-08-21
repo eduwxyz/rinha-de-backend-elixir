@@ -11,6 +11,6 @@ defmodule RinhaBackend.Pessoas.Search do
                ilike(p0.apelido, ^"%#{query_param}%") or
                fragment("? = ANY(p0.stack)", ^query_param)
 
-    Repo.all(query)
+    {:ok, Repo.all(query)}
   end
 end
