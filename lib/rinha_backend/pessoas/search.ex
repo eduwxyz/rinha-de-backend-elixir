@@ -10,7 +10,9 @@ defmodule RinhaBackend.Pessoas.Search do
         where:
           ilike(p0.nome, ^"%#{query_param}%") or
             ilike(p0.apelido, ^"%#{query_param}%") or
-            fragment("? = ANY(p0.stack)", ^query_param)
+            fragment("? = ANY(p0.stack)", ^query_param),
+        limit: 50
+
 
     {:ok, Repo.all(query)}
   end
