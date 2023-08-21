@@ -7,14 +7,15 @@ defmodule RinhaBackend.Pessoas.Pessoa do
     field :apelido, :string
     field :nascimento, :date
     field :nome, :string
-    field :stack, {:array, :string}
+    field :stack, {:array, :string}, default: nil
+    field :pesquisa, :string
   end
 
   # fixme -> verificar o params \\ %{}
   def changeset(pessoa \\ %__MODULE__{}, params) do
     pessoa
-    |> cast(params, [:nome, :apelido, :nascimento, :stack])
-    |> validate_required([:nome, :apelido, :nascimento], message: "Campos Obrigatórios")
+    |> cast(params, [:nome, :apelido, :nascimento, :stack, :pesquisa])
+    |> validate_required([:nome, :apelido, :nascimento], message: "Cam  pos Obrigatórios")
     |> validate_length(:nome, max: 100, message: "Nome deve ter no máximo 100 caracteres")
     |> validate_length(:apelido, max: 32, message: "Apelido deve ter no máximo 32 caracteres")
     |> unique_constraint(:apelido, message: "Apelido já cadastrado")

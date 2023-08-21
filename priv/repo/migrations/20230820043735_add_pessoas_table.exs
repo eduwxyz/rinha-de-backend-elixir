@@ -11,7 +11,7 @@ defmodule RinhaBackend.Repo.Migrations.AddPessoasTable do
       add :pesquisa, :text, default: nil
     end
 
-    create index(:pessoas, [:pesquisa])
+    create index(:pessoas, ["pesquisa gin_trgm_ops"], using: :gin)
     create unique_index(:pessoas, [:apelido])
   end
 end
