@@ -3,7 +3,6 @@ defmodule RinhaBackend.Pessoas.Create do
   alias RinhaBackend.Repo
 
   def call(params) do
-
     params_new = add_pesquisa_field(params)
 
     params_new
@@ -13,20 +12,18 @@ defmodule RinhaBackend.Pessoas.Create do
     # |> handle_response()
   end
 
-
   def add_pesquisa_field(params) do
     nome = Map.get(params, "nome", "")
     apelido = Map.get(params, "apelido", "")
     stack = Map.get(params, "stack", [])
 
+    stack_list =
+      case stack do
+        nil -> []
+        _ -> stack
+      end
 
-    stack_list = case stack do
-      nil -> []
-      _ -> stack
-    end
-
-
-    pesquisa = nome <> " " <> apelido <> " "  <> Enum.join(stack_list, " ")
+    pesquisa = nome <> " " <> apelido <> " " <> Enum.join(stack_list, " ")
 
     Map.put(params, "pesquisa", pesquisa)
   end
