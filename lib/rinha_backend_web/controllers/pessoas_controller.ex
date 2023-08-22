@@ -12,8 +12,10 @@ defmodule RinhaBackendWeb.PessoasController do
       |> put_status(:created)
       |> put_resp_header("location", "/pessoas/#{pessoa.uuid}")
       |> render(:create, pessoa: pessoa)
+
     end
-  end
+
+end
 
   def search(conn, %{"t" => query_param}) do
     case Pessoas.search(query_param) do

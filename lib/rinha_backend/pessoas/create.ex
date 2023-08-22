@@ -3,23 +3,13 @@ defmodule RinhaBackend.Pessoas.Create do
   alias RinhaBackend.Repo
 
   def call(params) do
+    params_with_pesquisa = add_pesquisa_field(params)
+    changeset = Pessoa.changeset(%Pessoa{}, params_with_pesquisa)
 
-    params_new = add_pesquisa_field(params)
-
-    params_new
-    |> Pessoa.changeset()
-    |> Repo.insert()
-
-
-    # |> handle_response()
+    Repo.insert(changeset)
   end
 
-  def add_pesquisa_field(params) do
-
-    nome = Map.get(params, "nome", "")
-    apelido = Map.get(params, "apelido", "")
-    stack = Map.get(params, "stack", [])
-
+  def add_pesquisa_field(%{"nome" => nome, "apelido" => apelido, "stack" => stack} = params) do
     stack_list =
       case stack do
         nil -> []
@@ -32,12 +22,9 @@ defmodule RinhaBackend.Pessoas.Create do
 
     apelido_string = to_string(apelido)
 
-    pesquisa = nome_string <> " " <> apelido_string <> " " <> Enum.join(stack_list, " ")
-
+    pesquisa =
+      nome_string <> " " <> apelido_string <> " " <> Enum.join(stack_list, " ")
 
     Map.put(params, "pesquisa", pesquisa)
   end
-
-  # defp handle_response({:ok, pessoa}), do: pessoa
-  # defp handle_response({:error, changeset}), do: changeset
 end

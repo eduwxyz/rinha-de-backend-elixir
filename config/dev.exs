@@ -21,8 +21,8 @@ config :rinha_backend, RinhaBackendWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 9999],
   check_origin: false,
-  code_reloader: false,
-  debug_errors: false,
+  code_reloader: true,
+  debug_errors: true,
   secret_key_base: "AD0qlBrhqjgI/4UsQImJkmwCZ/+km3761QW0FGc5PEbUkCePGm2YOMbNnSMZl0Y3",
   watchers: []
 

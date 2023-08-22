@@ -18,7 +18,7 @@ defmodule RinhaBackend.Pessoas.Pessoa do
     |> validate_required([:nome, :apelido, :nascimento], message: "Campos Obrigatórios")
     |> validate_length(:nome, max: 100, message: "Nome deve ter no máximo 100 caracteres")
     |> validate_length(:apelido, max: 32, message: "Apelido deve ter no máximo 32 caracteres")
-    |> unique_constraint(:apelido, message: "Apelido já cadastrado")
+    |> unique_constraint(:apelido, name: :pessoas_apelido_unique, message: "Apelido já cadastrado")
 
   end
 end
