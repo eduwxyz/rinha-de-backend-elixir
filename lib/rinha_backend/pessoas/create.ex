@@ -3,16 +3,19 @@ defmodule RinhaBackend.Pessoas.Create do
   alias RinhaBackend.Repo
 
   def call(params) do
+
     params_new = add_pesquisa_field(params)
 
     params_new
     |> Pessoa.changeset()
     |> Repo.insert()
 
+
     # |> handle_response()
   end
 
   def add_pesquisa_field(params) do
+
     nome = Map.get(params, "nome", "")
     apelido = Map.get(params, "apelido", "")
     stack = Map.get(params, "stack", [])
@@ -20,10 +23,17 @@ defmodule RinhaBackend.Pessoas.Create do
     stack_list =
       case stack do
         nil -> []
-        _ -> stack
+        s when is_list(s) -> s
+        s when is_binary(s) -> String.split(s, " ")
+        _ -> []
       end
 
-    pesquisa = nome <> " " <> apelido <> " " <> Enum.join(stack_list, " ")
+    nome_string = to_string(nome)
+
+    apelido_string = to_string(apelido)
+
+    pesquisa = nome_string <> " " <> apelido_string <> " " <> Enum.join(stack_list, " ")
+
 
     Map.put(params, "pesquisa", pesquisa)
   end
