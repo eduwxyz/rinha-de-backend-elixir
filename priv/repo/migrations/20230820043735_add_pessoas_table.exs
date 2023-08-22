@@ -5,7 +5,7 @@ defmodule RinhaBackend.Repo.Migrations.AddPessoasTable do
     create table("pessoas") do
       add :uuid, :binary_id, primary_key: true, autogenerate: true
       add :nome, :string, null: false, size: 100
-      add :apelido, :string, null: false, size: 32, unique: true
+      add :apelido, :string, null: false, size: 32
       add :nascimento, :date, null: false
       add :stack, {:array, :string}, default: nil
       add :pesquisa, :text, default: nil
