@@ -2,19 +2,82 @@ version: '3.8'
 services:
 
   postgres:
-    image: postgres:13
+    image: postgres:15.3-alpine3.18
     hostname: localhost
     ports:
       - "5432:5432"
     expose:
       - "5432"
+    command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
     environment:
       - POSTGRES_USER=rinha
       - POSTGRES_PASSWORD=rinha
       - POSTGRES_DB=rinha
+    volumes:
+      - './priv/repo/structure.sql:/docker-entrypoint-initdb.d/ddl.sql'
+      - './postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf'
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "rinha"]
       interval: 10s
       retries: 5
       start_period: 5s
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.6'
+          memory: "1.4GB"
+
+  api1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/api1
+    environment:
+      - DATABASE_URL=postgres://rinha:rinha@postgres/rinha
+      - SECRET_KEY_BASE=ApuT5o/Ewzkks7MmhGSUNqHz5Zt80ky3cVjRgF74WYEyZh9pwKFB4zqsVsxtNpVu
+      - POOL_SIZE=40
+    deploy:
+      resources:
+        limits:
+          cpus: '0.375'
+          memory: "0.5GB"
+
+  api2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/api1
+    environment:
+      - DATABASE_URL=postgres://rinha:rinha@postgres/rinha
+      - SECRET_KEY_BASE=ApuT5o/Ewzkks7MmhGSUNqHz5Zt80ky3cVjRgF74WYEyZh9pwKFB4zqsVsxtNpVu
+      - POOL_SIZE=40
+    deploy:
+      resources:
+        limits:
+          cpus: '0.375'
+          memory: "0.5GB"
+
+  load-balancer:
+    image: nginx:1.25.1-alpine3.17-slim
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf:ro'
+    depends_on:
+      - api1
+      - api2
+    ports:
+      - '${PORT:-9999}:8080'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: "0.5GB"
+    
