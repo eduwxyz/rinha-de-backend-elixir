@@ -9,12 +9,13 @@ defmodule RinhaBackendWeb.FallbackController do
   end
 
   def call(conn, {:error, changeset}) do
+    invalid_fields = [:nome, :apelido]
     status =
-      if is_invalid_type(changeset, :nome) or is_invalid_type(changeset, :apelido) do
-        :bad_request
-      else
-        :unprocessable_entity
-      end
+    if Enum.any?(invalid_fields, fn field -> is_invalid_type(changeset, field) end) do
+      :bad_request
+    else
+      :unprocessable_entity
+    end
 
     conn
     # 422

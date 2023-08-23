@@ -2,10 +2,18 @@ defmodule RinhaBackend.Pessoas.Get do
   alias RinhaBackend.Pessoas.Pessoa
   alias RinhaBackend.Repo
 
+
   def call(uuid) do
-    case Repo.get(Pessoa, uuid) do
-      pessoa -> {:ok, pessoa}
-      _ -> {:error, :not_found}
+    if value = RinhaBackend.Cache.get(uuid) do
+      {:ok, value}
+    else
+      case Repo.get(Pessoa, uuid) do
+        {:ok, pessoa} ->
+          RinhaBackend.Cache.put(uuid, pessoa)
+          {:ok, pessoa}
+        {:error, _} ->
+          {:error, :not_found}
+      end
     end
   end
 

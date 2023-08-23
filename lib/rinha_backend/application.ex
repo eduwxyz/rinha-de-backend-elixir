@@ -7,7 +7,9 @@ defmodule RinhaBackend.Application do
 
   @impl true
   def start(_type, _args) do
+
     children = [
+      {RinhaBackend.Cache, []},
       # Start the Telemetry supervisor
       RinhaBackendWeb.Telemetry,
       # Start the Ecto repository

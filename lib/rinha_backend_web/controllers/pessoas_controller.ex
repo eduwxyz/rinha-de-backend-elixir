@@ -8,6 +8,7 @@ defmodule RinhaBackendWeb.PessoasController do
 
   def create(conn, params) do
     with {:ok, %Pessoa{} = pessoa} <- Pessoas.create(params) do
+      RinhaBackend.Cache.put(pessoa.uuid, pessoa)
       conn
       |> put_status(:created)
       |> put_resp_header("location", "/pessoas/#{pessoa.uuid}")
